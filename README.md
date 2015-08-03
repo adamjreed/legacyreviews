@@ -13,23 +13,27 @@ There are 3 parameters you can specify for this script:
 oldId=newId,oldId2=newId2,...,oldIdN=newIdN
 
 Here is an example of a fully-formed command:
-`php legacy-reviews.php --reviews var/legacyreviews/reviews.csv --ratings var/legacyreviews/ratings.csv --mappings "50=65,55=70,60=75,65=80"`
+```
+php legacy-reviews.php --reviews var/legacyreviews/reviews.csv --ratings var/legacyreviews/ratings.csv --mappings "50=65,55=70,60=75,65=80"
+```
 
 ## Import Files
 ### Reviews
 Expected Headers:
-
-`review_id,entity_pk_value,created_at,status_id,customer_id,store_id,title,nickname,detail`
-
+```
+review_id,entity_pk_value,created_at,status_id,customer_id,store_id,title,nickname,detail
+```
 Example SQL Query:
-
-`select r.review_id, r.entity_pk_value, r.created_at, r.status_id, rd.customer_id, rd.store_id,rd.title,rd.nickname,rd.detail from review r left join review_detail rd on r.review_id = rd.review_id;`
+```
+select r.review_id, r.entity_pk_value, r.created_at, r.status_id, rd.customer_id, rd.store_id,rd.title,rd.nickname,rd.detail from review r left join review_detail rd on r.review_id = rd.review_id;
+```
 
 ### Ratings
 Expected Headers:
-
-`rating_id,review_id,customer_id,option_id,entity_pk_value`
- 
+```
+rating_id,review_id,customer_id,option_id,entity_pk_value
+```
 Example SQL Query:
-
-`select rating_id, review_id, customer_id, option_id, entity_pk_value from rating_option_vote;`
+```
+select rating_id, review_id, customer_id, option_id, entity_pk_value from rating_option_vote;
+```
