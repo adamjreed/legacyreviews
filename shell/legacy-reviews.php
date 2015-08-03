@@ -6,7 +6,7 @@ class Reed_Shell_Legacy_Reviews extends Mage_Shell_Abstract
 {
     public function run()
     {
-        if($this->getArg('reviews') && $this->getArg('ratings') && $this->getArg('mapping')) {
+        if($this->getArg('reviews') && $this->getArg('ratings')) {
             $this->_importData();
         }else {
             echo $this->usageHelp();
