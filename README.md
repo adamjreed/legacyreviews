@@ -26,7 +26,12 @@ review_id,entity_pk_value,created_at,status_id,customer_id,store_id,title,nickna
 ```
 Example SQL Query:
 ```
-select r.review_id, r.entity_pk_value, r.created_at, r.status_id, rd.customer_id, rd.store_id,rd.title,rd.nickname,rd.detail from review r left join review_detail rd on r.review_id = rd.review_id;
+SELECT r.review_id, r.entity_pk_value, r.created_at, r.status_id, rd.customer_id, rd.store_id,rd.title,rd.nickname,rd.detail
+INTO OUTFILE 'reviews.csv'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+FROM review r
+LEFT JOIN review_detail rd ON r.review_id = rd.review_id;
 ```
 
 ### Ratings
@@ -36,5 +41,9 @@ rating_id,review_id,customer_id,option_id,entity_pk_value
 ```
 Example SQL Query:
 ```
-select rating_id, review_id, customer_id, option_id, entity_pk_value from rating_option_vote;
+SELECT rating_id, review_id, customer_id, option_id, entity_pk_value
+INTO OUTFILE 'ratings.csv'
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+FROM rating_option_vote;
 ```
