@@ -40,7 +40,13 @@ class Reed_Shell_LegacyReviews extends Mage_Shell_Abstract {
                 $mapping = $this->_parseMapping($mapping);
             }
 
-            $this->_importData($reviews, $ratings, $mapping);
+            $rowsAdded = $this->_importData($reviews, $ratings, $mapping);
+
+            if($rowsAdded === 0) {
+                throw new Reed_Shell_Exception('No reviews were added.');
+            }
+
+            $this->_writeLn("Successfully imported {$rowsAdded} reviews.", self::VERBOSITY_INFO);
         } catch(Reed_Shell_Exception $e) {
             $this->_writeLn($e->getMessage(), self::VERBOSITY_ERROR);
             echo $this->usageHelp();
@@ -62,9 +68,10 @@ class Reed_Shell_LegacyReviews extends Mage_Shell_Abstract {
     /**
      * Import review and ratings csv data into the current Magento instance.
      *
-     * @param string        $reviews
-     * @param string        $ratings
-     * @param array|boolean $mapping
+     * @param  string        $reviews
+     * @param  string        $ratings
+     * @param  array|boolean $mapping
+     * @return int           $count
      *
      * @throws Reed_Shell_Exception
      */
@@ -122,7 +129,7 @@ class Reed_Shell_LegacyReviews extends Mage_Shell_Abstract {
             $count++;
         }
 
-        $this->_writeLn("Successfully imported {$count} reviews.", self::VERBOSITY_INFO);
+        return $count;
     }
 
     /**
